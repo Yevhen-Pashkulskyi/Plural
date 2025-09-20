@@ -52,16 +52,20 @@ public class Product {
         return revenueSale(quantity, retailPrice);
     }
 
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
     @Override
     public String toString() {
-        return "nameProduct='" + nameProduct + '\'' +
-                ", manufacturer='" + manufacturer + '\'' +
-                ", quantity=" + quantity +
-                ", warrantyPeriod=" + warrantyPeriod +
-                ", Оптовая ціна=" + wholesalePrice +
-                ", retailPrice=" + retailPrice +
-                ", revenueWholesale=" + revenueWholesale +
-                ", revenueRetailPrice=" + revenueRetailPrice;
+        return "Назва: " + nameProduct +
+                ", Виробник: " + manufacturer +
+                ", кількість =" + quantity +
+                ", гарантійний період: " + warrantyPeriod +
+                ", оптовая ціна = " + wholesalePrice +
+                ", роздібна ціна = " + retailPrice +
+                ", оптовий потенційний дохід = " + revenueWholesale +
+                ", роздрібний потенційний дохід = " + revenueRetailPrice;
     }
 
     private double revenueSale(int quantity, double price) {
