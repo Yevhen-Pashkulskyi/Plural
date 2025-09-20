@@ -25,10 +25,7 @@ public class ControlApp {
             }
             switch (choice) {
                 case "1": // add to list
-                    String counterStr = String.valueOf(randomNumber(0, 1000));
-                    pluralProduct.addProduct(createProduct("Product" + counterStr, "Manufacturer" + counterStr));
-                    showMessageDialog(null, "Create product" + counterStr + " successful");
-
+                    pluralProduct.addProduct(createProduct());
                     break;
                 case "2": // print list
                     showMessageDialog(null, "Список продуктів:\n" + pluralProduct.printProducts());
@@ -50,9 +47,22 @@ public class ControlApp {
     }
 
     // метод створює продукт з випадковими значеннями
-    private Product createProduct(String nameProduct, String manufacturer) {
-        double priceWholesale = rounderDouble(randomNumber(-10.0, 1000.0));
-        return new Product(nameProduct, manufacturer, randomNumber(-10, 10), randomNumber(0, 365),
-                priceWholesale, priceWholesale * 1.3);
+    private Product createProduct() {
+        try {
+            String counterStr = String.valueOf(randomNumber(0, 1000));
+            String nameProduct = "Product" + counterStr;
+            String manufacturerProduct = "Manufacturer" + counterStr;
+            int quantity = randomNumber(-10, 10);
+            int warranty = randomNumber(-1, 365);
+            double priceWholesale = rounderDouble(randomNumber(-10.0, 1000.0));
+            double retailPrice = priceWholesale * 1.3;
+
+            Product product = new Product(nameProduct, manufacturerProduct, quantity, warranty, priceWholesale, retailPrice);
+            showMessageDialog(null, "Create:\n" + product.getNameProduct() + "\nsuccessful");
+            return product;
+        } catch (IllegalArgumentException e) {
+            showMessageDialog(null, "Помилка во внесенні данних" + e.getMessage());
+            return null;
+        }
     }
 }
