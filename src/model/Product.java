@@ -12,8 +12,8 @@ public class Product {
     private double wholesalePrice; // оптовая ціна
     private double retailPrice;
 
-    private double proceedsWholesale;
-    private double proceedsRetailPrice;
+    private double revenueWholesale;
+    private double revenueRetailPrice;
 
     public Product() {
     }
@@ -26,8 +26,8 @@ public class Product {
         this.warrantyPeriod = warrantyPeriod;
         this.wholesalePrice = wholesalePrice;
         this.retailPrice = retailPrice;
-        this.proceedsWholesale = proceedsSale(quantity, wholesalePrice);
-        this.proceedsRetailPrice = proceedsSale(quantity, retailPrice);
+        this.revenueWholesale = revenueSale(quantity, wholesalePrice);
+        this.revenueRetailPrice = revenueSale(quantity, retailPrice);
     }
 
     public LinkedList<Product> addProduct(Product product) {
@@ -36,16 +36,20 @@ public class Product {
         return products;
     }
 
+    public String getNameProduct() {
+        return nameProduct;
+    }
+
     public double getRetailPrice() {
         return retailPrice;
     }
 
-    public double getProceedsWholesale() {
-        return proceedsSale(quantity, wholesalePrice);
+    public double getRevenueWholesale() {
+        return revenueSale(quantity, wholesalePrice);
     }
 
-    public double getProceedsRetailPrice() {
-        return proceedsSale(quantity, retailPrice);
+    public double getRevenueRetailPrice() {
+        return revenueSale(quantity, retailPrice);
     }
 
     @Override
@@ -56,11 +60,11 @@ public class Product {
                 ", warrantyPeriod=" + warrantyPeriod +
                 ", Оптовая ціна=" + wholesalePrice +
                 ", retailPrice=" + retailPrice +
-                ", proceedsWholesale=" + proceedsWholesale +
-                ", proceedsRetailPrice=" + proceedsRetailPrice;
+                ", revenueWholesale=" + revenueWholesale +
+                ", revenueRetailPrice=" + revenueRetailPrice;
     }
 
-    private double proceedsSale(int quantity, double price) {
+    private double revenueSale(int quantity, double price) {
         double sum = price * quantity;
         return Utility.rounderDouble(sum);
     }
