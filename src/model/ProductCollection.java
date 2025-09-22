@@ -3,10 +3,8 @@ package model;
 import exc.MyException;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedList;
 
-import static javax.swing.JOptionPane.showMessageDialog;
 
 public class ProductCollection {
     private LinkedList<Product> productsList;
