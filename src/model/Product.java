@@ -1,10 +1,11 @@
 package model;
 
+import exc.MyException;
 import util.Utility;
 
-import java.util.LinkedList;
+import java.util.Objects;
 
-public class Product {
+public class Product implements Comparable<Product> {
     private String nameProduct;
     private String manufacturer; // виробник
     private int quantity;
@@ -12,28 +13,15 @@ public class Product {
     private double wholesalePrice; // оптовая ціна
     private double retailPrice;
 
-    private double revenueWholesale;
-    private double revenueRetailPrice;
-
-    public Product() {
-    }
 
     public Product(String nameProduct, String manufacturer, int quantity, int warrantyPeriod,
-                   double wholesalePrice, double retailPrice) {
+                   double wholesalePrice, double retailPrice) throws MyException {
         this.nameProduct = nameProduct;
         this.manufacturer = manufacturer;
         this.quantity = quantity;
         this.warrantyPeriod = warrantyPeriod;
         this.wholesalePrice = wholesalePrice;
         this.retailPrice = retailPrice;
-        this.revenueWholesale = revenueSale(quantity, wholesalePrice);
-        this.revenueRetailPrice = revenueSale(quantity, retailPrice);
-    }
-
-    public LinkedList<Product> addProduct(Product product) {
-        LinkedList<Product> products = new LinkedList<>();
-        products.add(this);
-        return products;
     }
 
     public String getNameProduct() {
@@ -44,12 +32,8 @@ public class Product {
         return retailPrice;
     }
 
-    public double getRevenueWholesale() {
-        return revenueSale(quantity, wholesalePrice);
-    }
-
-    public double getRevenueRetailPrice() {
-        return revenueSale(quantity, retailPrice);
+    public double getProfit() {
+        return Utility.rounderDouble((retailPrice - wholesalePrice) * quantity);
     }
 
     public String getManufacturer() {
@@ -64,12 +48,23 @@ public class Product {
                 ", гарантійний період: " + warrantyPeriod +
                 ", оптовая ціна = " + wholesalePrice +
                 ", роздібна ціна = " + retailPrice +
-                ", оптовий потенційний дохід = " + revenueWholesale +
-                ", роздрібний потенційний дохід = " + revenueRetailPrice;
+                ", Прибуток = " + getProfit();
     }
 
-    private double revenueSale(int quantity, double price) {
-        double sum = price * quantity;
-        return Utility.rounderDouble(sum);
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(nameProduct, product.nameProduct) && Objects.equals(manufacturer, product.manufacturer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nameProduct, manufacturer);
+    }
+
+    @Override
+    public int compareTo(Product other) {
+        return Double.compare(this.getProfit(), other.getProfit());
     }
 }
